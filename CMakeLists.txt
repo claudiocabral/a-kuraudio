@@ -9,6 +9,6 @@ add_executable(${TEST_APP}
   )
 
 target_include_directories(${TEST_APP} PRIVATE
-  a-kuraudio
+  includes
   third-party/catch2
   )

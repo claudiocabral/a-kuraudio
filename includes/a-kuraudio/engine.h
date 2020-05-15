@@ -4,15 +4,18 @@ namespace akuraudio {
 template <class T>
 class Engine {
   public:
-    void callback() = delete;
-    constexpr bool shouldRun() { return true; }
+    bool shouldRun() { return true; }
+    template <class Input, class Output, class SampleRate, class BlockSize,
+              class Status>
+    void callback(Input &&input, Output &&output, SampleRate sampleRate,
+                  BlockSize blockSize, Status status) {
+        static_cast<T &>(this).callback(input, output, sampleRate, blockSize,
+                                        status);
+    }
 
   private:
     friend inline bool shouldRun(Engine<T> &audio) {
         return static_cast<T &>(audio).shouldRun();
-    }
-    friend inline void callback(Engine<T> &audio) {
-        static_cast<T &>(audio).callback();
     }
 };
 } // namespace akuraudio
